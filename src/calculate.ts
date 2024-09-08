@@ -1,6 +1,12 @@
 import { resetColor, textoVermelho } from "./constants"
+import { Config } from "./models"
 
-export const fazerContas = () => {
+export const calculate = async () => {
+  const config = await Config.findAll();
+  if (config.length !== 1) {
+    console.error(`${textoVermelho}There is more than one config, please remove any extra config and try again.${resetColor}`)
+    return;
+  }
   const isCorrectValues = totalLazer + totalInvestimentos === 1
 
   if (!isCorrectValues) {
