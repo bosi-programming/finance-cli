@@ -1,6 +1,11 @@
-import { Sequelize } from "sequelize";
+import { DataSource } from "typeorm"
+import { Config } from "../models"
 
-export const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database/database.db'
-});
+export const datasource = new DataSource({
+  type: "better-sqlite3",
+  database: "./database/database.db",
+  entities: [Config],
+  synchronize: true,
+  logging: false,
+})
+

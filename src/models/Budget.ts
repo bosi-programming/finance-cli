@@ -1,12 +1,22 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "src/services/database";
+import { datasource } from "src/services/database";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export const Budget = sequelize.define('Budget', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  type: DataTypes.ENUM('fixedValue', 'percentage'),
-  values: DataTypes.JSON()
-})
+export enum BudgetType {
+  FIXED = 'fixed',
+  PERCENTAGE = 'percentage',
+}
+
+@Entity()
+export class Budget {
+  @PrimaryGeneratedColumn()
+  id: number
+  @Column({
+    type: 'simple-enum',
+    enum: BudgetType
+  })
+  type: BudgetType
+  @Column('simple-json')
+  values: { name: string, value: string }[]
+}
+
+export const budgetRepository = datasource.getRepository(Budget)

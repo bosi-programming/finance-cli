@@ -44,7 +44,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "better-sqlite3": "^9.0.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }

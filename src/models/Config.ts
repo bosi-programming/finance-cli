@@ -1,6 +1,21 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "src/services/database";
+import { datasource } from "src/services/database";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export const Config = sequelize.define('Config', {
-  period: DataTypes.ENUM('weekly', 'halfMonthly', 'monthly'),
-})
+export enum ConfigPeriod {
+  WEEKLY = 'weekly',
+  HALF_MONTHLY = 'halfMonthly',
+  MONTHLY = 'monthly'
+}
+
+@Entity()
+export class Config {
+  @PrimaryGeneratedColumn()
+  id: number
+  @Column({
+    type: 'simple-enum',
+    enum: ConfigPeriod
+  })
+  period: ConfigPeriod
+}
+
+export const configRepository = datasource.getRepository(Config);

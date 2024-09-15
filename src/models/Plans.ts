@@ -1,12 +1,16 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "src/services/database";
+import { datasource } from "src/services/database";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export const Plan = sequelize.define('Plan', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  timePeriod: DataTypes.TEXT(),
-  values: DataTypes.JSON()
-})
+@Entity()
+export class Plan {
+  @PrimaryGeneratedColumn()
+  id: number
+  @Column('simple-json')
+  values: { name: string, value: string }[]
+  @Column('datetime')
+  startDate: Date
+  @Column('datetime')
+  endDate: Date
+}
+
+export const planRepository = datasource.getRepository(Plan)
